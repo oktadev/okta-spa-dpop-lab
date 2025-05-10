@@ -1,0 +1,42 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "2 - Bearer token",
+  "nextTour": "3 - DPoP token",
+  "steps": [
+    {
+      "file": "src/app/app.config.ts",
+      "description": "## The bearer token\n\nWe use the configuration values you added to initialize Okta. Notice the request includes scopes to read Okta Users API. \n\nNavigate back to the app and open Developer Tools to inspect the site. In Chrome, press `F12` to open DevTools. Open the **Application** tab so we can inspect the tokens we got from Okta after authenticating.\n\nYou'll find the tokens in browser storage. Expand **Local storage** and find your app URL. Select your app, and you'll see Okta's token storage as a key-value pair. Select `okta-token-storage` and find the token information panel. Expand `accessToken` to see access token properties. Of note is `tokenType: Bearer`, meaning you'd use the `Bearer` scheme when presenting the token to request resources. \n\n\n> ⚠️ OAuth clients should not parse and read access tokens, but we'll manually inspect the token today for learning purposes. Don't do this in code in your production app! \n\n\nThe access token is in JSON Web Token (JWT) format, a compact and secure way to send data. JWTs maintain their integrity because the data is digitally signed. Resource servers receiving the access token in a resource request verify the token's signature before returning resources. We can decode the JWT to view the contents. It can be tricky to copy the entire access token from the local storage view, so we'll write it out to a view that's easier to work with.\n\nOpen the **Console Drawer** in DevTools, which allows you to run JavaScript commands on the site. Press the `Esc` key when the site is in focus or press the three vertical dots icon in the DevTools toolbar and select **Show console drawer**. Copy and paste the following JavaScript command into the browser console. This command writes the token to make it easier to copy the entire value.\n\n⬇️\n\n`console.log(JSON.parse(localStorage.getItem('okta-token-storage')).accessToken.accessToken)`\n\n⬆️\n\nCopy the token and paste it into [jwt.io](command:vscode.open?[\"https://jwt.io\"]). The JWT Debugger tool decodes the token so we can inspect its data.\n\nThe first section is the **Decoded Header**, which includes metadata about the token. The `typ: application/okta-internal-at+jwt` claim denotes the token type. \n\nThe second section is the **Decoded Payload**. The data in the payload is relevant to the token request, including the requesting party. We see information such as `iss`, the issuing authorization server (our Okta domain), the scopes (`scp`) we requested when we authenticated, and when the authorization server issued the token (`iat`).\n\nFor now, we can skip the third section about **JWT Signature Verification**.\n\nOpen the **Network** tab in DevTools. ",
+      "line": 15,
+      "selection": {
+        "start": {
+          "line": 10,
+          "character": 127
+        },
+        "end": {
+          "line": 10,
+          "character": 141
+        }
+      }
+    },
+    {
+      "file": "src/app/app.routes.ts",
+      "description": "## Viewing users\n\nThe app has a view for users, so let's check it out. Press the **Users** link in the app's navigation.\n\nAnd we see.... table headers and nothing else. Oh, we see an error in the **Network** tab. What kind of app is this?! 👻\n\nSelect the `users?limit=10` in the **Network** tab and open the **Headers** tab. Find the **Request Headers** section. Notice the call is missing the required `Authorization` header with the access token, which provides the resource server with the authorization context. Let's add the access token now.\n",
+      "line": 8
+    },
+    {
+      "file": "src/app/auth.interceptor.ts",
+      "description": "## Add the access token to the Authorization header\n\nWe can set the `Authorization` header and access token here. You'll use Okta's OIDC client library to get the access token and modify the outgoing request header. Add the following code to the file by pressing on the **Insert Code** button:\n\n```ts\nconst accessToken = oktaAuth.getAccessToken();\nif (accessToken) {\n  request = req.clone({\n    setHeaders: {\n      'Authorization': `Bearer ${accessToken}`\n    }\n  });\n}\n```",
+      "line": 12
+    },
+    {
+      "file": "src/app/auth.interceptor.ts",
+      "description": "## Double check your work\n\nPress [this link to run the unit test script that verifies your code configuration](command:codetour.sendTextToTerminal?[\"npm run test:bearer\"]).\n> Note this runs the following command: `npm run test:bearer`.\n\nIf you see the output\n\n`✓ spec-app-auth.interceptor.spec.js (3 tests)`\n\nyou're ready for the next step.\n\nIf you don't see 3 passing tests, you must fix the code before continuing. Feel free to ask for help!",
+      "line": 16
+    },
+    {
+      "file": "src/app/auth.interceptor.ts",
+      "description": "## Use the access token to make API requests\n\nNow take a look at the users table. You should now see users. Find the most recent `users?limit=10` request in DevTool's **Network** tab and inspect the request headers. You should see the header `Authorization: Bearer {yourAccessToken}`. \n\nLet's make the call using the same access token from a different caller. Remember, the Authorization Server issued the access token to the sample app. What if we made a different request using the same token from an HTTP Client app? We have two variances in this scenario: the endpoint and the caller.\n\n Let's use the access token issued to the sample app in a separate HTTP client. Open the Http Client extension already installed in this Codespace using VS Code's Command Palette. Open the Command Palette one of three ways:\n  * MacOS - use the keyboard shortcut Cmd+Shift+P\n  * Windows - use the keyboard shortcut Ctrl+Shift+P\n  * To avoid keyboard shortcuts, press the three bars icon at the top left of the Codespace, then select **View** > **Command Palette...**\n\nStart typing \"Http\" and select the **Http Client: Open Http Client** option. You'll see a new tab for **Http Client** which makes HTTP requests from a user interface. Fill in the following fields:\n  1. Leave the method as `GET`\n  2. Enter `https://{yourOktaDomain}/api/v1/apps`\n  3. Select **Headers** tab and\n     1. Enter `Authorization` as the **Key**\n     2. Open the console drawer in the app's DevTools panel if closed; you'll need your access token again. Copy the following code and run it in the browser console to display the access token: \n      \n      ⬇️\n      `console.log(JSON.parse(localStorage.getItem('okta-token-storage')).accessToken.accessToken)`\n      ⬆️\n        \n     3. Enter `Bearer {yourAccessToken}` as the **Value**.\n\n**Send** the request. Do you see a 200 OK with a list of Okta apps?\n\n⛔️ Success is what we expect, but the implications are dangerous. If a bad actor manages to exfiltrate or capture your unexpired access token, they can make unauthorized calls on your behalf. The Bearer scheme means the caller bearing a valid access token has the authority to make the request as long as the access token contains the scope for what the caller tries to do. Elevated access tokens from admin users are extra dangerous if they fall into the wrong hands. ‼️\n\n\nSign out from the app so we can start the next step from a fresh state. \n\n\nThe poor access token in this section feels insecure because it couldn't prove it belonged. 💀😅 Let's see what happens when we switch to using DPoP.",
+      "line": 15
+    }
+  ]
+}

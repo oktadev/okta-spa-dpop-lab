@@ -1,0 +1,41 @@
+{
+  "name": "okta-spa-dpop-lab",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test:config": "ng test --include app/okta.config.spec.ts --watch false",
+    "test:bearer": "ng test --include app/auth.interceptor.ts --watch false",
+    "test:dpop": "ng test --include app/dpop-auth.interceptor.ts --watch false",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^20.0.0",
+    "@angular/compiler": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@angular/forms": "^20.0.0",
+    "@angular/platform-browser": "^20.0.0",
+    "@angular/router": "^20.0.0",
+    "@okta/okta-angular": "^6.5.1",
+    "@okta/okta-auth-js": "^7.12.1",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^20.0.2",
+    "@angular/cli": "^20.0.2",
+    "@angular/compiler-cli": "^20.0.0",
+    "@tailwindcss/postcss": "^4.1.7",
+    "@types/jasmine": "~5.1.0",
+    "jasmine-core": "~5.7.0",
+    "jsdom": "^26.1.0",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.7",
+    "typescript": "~5.8.2",
+    "vitest": "^3.2.3"
+  }
+}

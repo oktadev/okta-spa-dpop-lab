@@ -1,0 +1,40 @@
+<h1 class="text-2xl mb-8">Users</h1>
+<div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr class="*:px-6 *:py-3">
+                <th scope="col">
+                    Given name
+                </th>
+                <th scope="col">
+                    Family name
+                </th>
+                <th scope="col">
+                    Title
+                </th>
+                <th scope="col">
+                    Email
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+          @for (user of users$ | async; track user.id) {
+            <tr class="border-b border-gray-200 *:px-6 *:py-4">
+                <td scope="row" class="whitespace-nowrap">
+                    {{user.firstName}}
+                </td>
+                <td >
+                    {{user.lastName}}
+                </td>
+                <td>
+                    {{user.title}}
+                </td>
+                <td>
+                    {{user.email}}
+                </td>
+            </tr>
+          }
+        </tbody>
+    </table>
+</div>
+

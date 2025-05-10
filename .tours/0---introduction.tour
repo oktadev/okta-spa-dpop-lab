@@ -1,0 +1,11 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "0 - Dev Lab: Use Possession-proof Tokens",
+  "nextTour": "1 - Get the sample app up and running",
+  "steps": [
+    {
+      "title": "Welcome",
+      "description": "## Glad to code with you\nWe'll enhance access token security in a SPA by using possession proofs and enhanced tokens that come with receipts. 🔒 \n\nYou'll follow the CodeTour for instructions and work within Codespace and extra browser tabs. Get ready to:\n  1. Simulate unauthorized calls to your Okta org using a Bearer token\n  2. Enable DPoP in Okta and the app\n  3. Simulate unauthorized calls again to see the protection mechanism at work\n  \nFeel free to ask questions and let us know if you need help. Let's get coding! 💻"
+    }
+  ]
+}
