@@ -6,7 +6,7 @@ In this lab, you'll see how Demonstrating Proof of Possession protects you from 
 
 ## Get going
 
-Open the project in GitHub Codespaces. Run `npm ci` to install dependencies.
+Open the project in GitHub Codespaces. Follow the instructions in CodeTours. You will use an Okta training org.
 
 
 Created with your 🔐 in mind by Okta Developers.
