@@ -4,6 +4,10 @@
   "nextTour": "2 - Bearer token",
   "steps": [
     {
+      "title": "Welcome",
+      "description": "## Glad to code with you\nWe'll enhance access token security in a SPA by using possession proofs and enhanced tokens that come with receipts. 🔒 \n\nYou'll follow the CodeTour for instructions and work within Codespace and extra browser tabs. Get ready to:\n  1. Simulate unauthorized calls to your Okta org using a Bearer token\n  2. Enable DPoP in Okta and the app\n  3. Simulate unauthorized calls again to see the protection mechanism at work\n  \nFeel free to ask questions and let us know if you need help. Let's get coding! 💻"
+    },
+    {
       "title": "What you need to know about the sample",
       "description": "## Get the sample app up and running\n\nThis code project is an Angular SPA with Okta client libraries already added. You'll need a browser with good developer tooling, such as Chrome, Edge, or Firefox. We've tailored the instructions for Chrome.\n\n**Token assurance and code assurance**\n\nAs you make code changes, the instructions will have you run an automated test script to double-check your work. Testing FTW! 🏆"
     },
