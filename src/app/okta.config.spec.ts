@@ -18,6 +18,7 @@ describe('OktaConfig', () => {
 
   it('should have a replaced value for issuer', () => {
     expect(oktaConfig.issuer).not.toEqual(`{yourOktaDomain}`);
+    expect(oktaConfig.issuer).not.toContain('}');
   });
 
   it('should have a replaced value for clientID', () => {
@@ -27,7 +28,7 @@ describe('OktaConfig', () => {
 
   it('should have a valid issuer', () => {
     expect(oktaConfig.issuer).toMatch(/https:\/\/[a-z0-9-]+.oktapreview.com/);
-    expect(oktaConfig.issuer).not.toContain('}');
+    expect(oktaConfig.issuer).not.toContain('-admin.oktapreview.com');
   });
 
 });
