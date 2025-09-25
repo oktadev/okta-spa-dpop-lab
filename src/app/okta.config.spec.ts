@@ -22,10 +22,12 @@ describe('OktaConfig', () => {
 
   it('should have a replaced value for clientID', () => {
     expect(oktaConfig.clientID).not.toEqual(`{yourOktaClientID}`);
+    expect(oktaConfig.clientID).not.toContain('}');
   });
 
   it('should have a valid issuer', () => {
     expect(oktaConfig.issuer).toMatch(/https:\/\/[a-z0-9-]+.oktapreview.com/);
+    expect(oktaConfig.issuer).not.toContain('}');
   });
 
 });
