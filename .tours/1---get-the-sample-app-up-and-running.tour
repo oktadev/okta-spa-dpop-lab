@@ -18,7 +18,7 @@
     },
     {
       "file": "src/app/okta.config.ts",
-      "description": "## Update the project with your Okta config\n\nThe sample app needs your Okta config info, so we opened the `okta.config.ts` file for you. Let's update the `issuer` and `clientID` values above this tour instruction pane:\n\n1. Replace `{yourOktaClientID}` with the Client ID in your clipboard from the last step. The `OktaConfig` object property should look something like `issuer: '0oabapji';`\n2. Replace `{yourOktaDomain}` value with the URL for your Okta training org. It will look something like `https://oktaice#######.oktapreview.com`. ",
+      "description": "## Update the project with your Okta config\n\nThe sample app needs your Okta config info, so we opened the `okta.config.ts` file for you. Let's update the `issuer` and `clientID` values above this tour instruction pane:\n\n1. Replace `{yourOktaClientID}` with the Client ID in your clipboard from the last step. The `OktaConfig` object property should look something like `clientID: '0oabapji';` and should not include curly braces.\n2. Replace `{yourOktaDomain}` value with the URL for your Okta training org. It will look something like `https://oktaice#######.oktapreview.com` and should not include curly braces.",
       "line": 10
     },
     {
@@ -28,7 +28,7 @@
     },
     {
       "file": "src/app/okta.config.ts",
-      "description": "## Configure Codespace visibility\n\nWe use the configuration values you added to initialize Okta. Notice the request includes scopes for reading Okta Users API.\n\nLet's start the app. Open a new terminal window by navigating to the **TERMINAL** tab and selecting the ➕ (plus) icon. Run the command `npm start` in the new terminal.\n\nThe app needs to be visible to Okta to complete the sign-in process:\n1. Open the **PORTS** panel within this window and find the app running on port 4200.\n2. Right click on the app and select **Port visibility** > **Public**.\n3. Click the 🌐 (web) icon to open your app in a new browser tab.\n\nYou should see the SPA DPoP Lab site running from the Codespace. If you see a warning from GitHub about accessing a development port in a codespace, select the **Continue** button.\n\nSign in using the credentials provided for your Okta training org. Next up - tokens!",
+      "description": "## Configure Codespace visibility\n\nWe use the configuration values you added to initialize Okta.\n\nLet's start the app. Open a new terminal window by navigating to the **TERMINAL** tab and selecting the ➕ (plus) icon. Run the command `npm start` in the new terminal.\n\nThe app needs to be visible to Okta to complete the sign-in process:\n1. Open the **PORTS** panel within this window and find the app running on port 4200.\n2. Right click on the app and select **Port visibility** > **Public**.\n3. Click the 🌐 (web) icon to open your app in a new browser tab.\n\nYou should see the SPA DPoP Lab site running from the Codespace. If you see a warning from GitHub about accessing a development port in a codespace, select the **Continue** button.\n\nSign in using the credentials provided for your Okta training org. Next up - tokens!",
       "line": 11
     }
   ]
